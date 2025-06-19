@@ -49,7 +49,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     
-    
+    permissions:
+      id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
@@ -60,10 +63,17 @@ jobs:
         run: unzip release.zip
 
       
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4DF041678FCA4C8F967DFDE9AEB4DD4C }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_5E9636F555644EC19D54DEE9BB2FF90A }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A9E53D5793804914B3B201DB7FBDCEE9 }}
+
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
           app-name: 'meeting-assistant'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_69CDB07E38E14AD0B23D06FB73EAF006 }}
+          
