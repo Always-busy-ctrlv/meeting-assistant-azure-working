@@ -68,4 +68,4 @@ jobs:
         with:
           app-name: 'ai-meeting'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5A0284B2ECC549AC9D98C342E856643A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5C4C1C0FC74344E084699B4FFB9F941D }}
